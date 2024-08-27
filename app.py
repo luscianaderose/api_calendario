@@ -1,5 +1,6 @@
 from flask import Flask
 import requests
+import calendar
 
 app = Flask(__name__)
 
@@ -31,6 +32,14 @@ def feriados_mes(ano, mes):
         # return resposta.json()
     else:
         return f'Erro na requisição: {resposta.status_code}'
+
+@app.route('/calendario/ano/<ano>/mes/<mes>')
+def calendario(ano, mes):
+    calendario = calendar.Calendar()
+    print(list(calendario.itermonthdates(int(ano), int(mes))))
+    return ''
+
+
 
 
 if __name__ == '__main__':
