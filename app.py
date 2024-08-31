@@ -5,6 +5,9 @@ from datetime import date
 
 app = Flask(__name__)
 
+calendario = calendar.Calendar()
+
+
 @app.route('/')
 def home():
     return 'API Calendário OK'
@@ -35,39 +38,45 @@ def feriados_mes(ano, mes):
         return f'Erro na requisição: {resposta.status_code}'
 
 @app.route('/calendario/ano/<ano>/mes/<mes>')
-def calendario(ano, mes):
-    calendario = calendar.Calendar()
+def calendario_mes(ano, mes):
     cal_mes = list(calendario.itermonthdates(int(ano), int(mes)))
     lista_dias_mes = []
     dias_semana = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D']
     feriados = feriados_mes(ano, mes)
-    feriados_datas = []
+    feriados_formato2 = {}
     for feriado in feriados:
-        feriados_datas.append(feriado['date'])
+        data = feriado['date']
+        feriados_formato2[data] = feriado['name']
     for dia_mes in cal_mes:
-        dia_data = ano + '-' + mes + '-' + str(dia_mes.day)
-        tem_feriado = dia_data in feriados_datas
-        if tem_feriado:
-            for feriado in feriados:
-                print(dia_data, feriado['date'], feriado['date'] == dia_data)
-                if feriado['date'] == dia_data:
-                    feriado = feriado['name']
-        else:
-            feriado = None
-        print(feriado)
+        dia_data = dia_mes.strftime("%Y-%m-%d")
+        print('dia_data ', dia_data, '\n\n')
         dia_info = {
             'dia_mes': dia_mes.day,
             'dia_semana': dia_mes.weekday(),
             'dia_semana_display': dias_semana[dia_mes.weekday()],
-            'tem_feriado': dia_data in feriados_datas,
-            'feriado': feriado,
+            'tem_feriado': dia_data in feriados_formato2.keys(),
+            'feriado': feriados_formato2.get(dia_data),
         }
         lista_dias_mes.append(dia_info)
+    print('calendario ', calendario, '\n\n')
+    print('cal_mes ', cal_mes, '\n\n')
+    print('lista_dias_mes', lista_dias_mes, '\n\n')
+    print('dias_semana', dias_semana, '\n\n')
+    print('feriados', feriados, '\n\n')
+    print('feriados_formato2', feriados_formato2, '\n\n')
     return lista_dias_mes
 
-
-# 'dia_semana': 'Mon',
-# 'dia_mes': 29,
+@app.route('/calendario/ano/<ano>')
+def calndario(ano):
+    meses_do_ano = ("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+    calendario_ano = {}
+    for mes in meses_do_ano:
+        cal_mes = list(calendario.itermonthdates(int(ano), int(mes)))
+        mes_indice = meses_do_ano.index(mes)
+        calendario_ano[mes] = {}
+        for dia in cal_mes:
+            calendario_ano[mes][dia] = dia.day
+    return calendario_ano
 
 
 if __name__ == '__main__':
