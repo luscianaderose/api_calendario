@@ -2,8 +2,10 @@ from flask import Flask
 import requests
 import calendar
 from datetime import date
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 calendario = calendar.Calendar()
 
@@ -71,7 +73,7 @@ def calndario(ano):
     meses_do_ano = ("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
     calendario_ano = {}
     for i,mes in enumerate(meses_do_ano):
-        calendario_ano[mes] = calendario_mes(ano, i+1)
+        calendario_ano[i] = {"mes_display":mes, "dias":calendario_mes(ano, i+1)}
         #print('i,mes', i+1,mes)
     return calendario_ano
 
