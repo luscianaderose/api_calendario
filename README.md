@@ -31,7 +31,7 @@ http://localhost:5000/
 
 ## API EXTERNA
 
-a api externa é a Brasil API que fornece informações gerais sobre o brasil como mapeadomento de cep ou feriados.
+A api externa é a Brasil API que fornece informações gerais sobre o Brasil como mapeadomento de CEP ou feriados.
 
 Sobre a API:
 
@@ -48,7 +48,7 @@ Rotas Utilizadas:
 
 Os demais repositórios associados a este projetos podem ser consultados em:
 
-- [front_recepcao](https://github.com/luscianaderose/front_recepcao)
 - [api_recepcao](https://github.com/luscianaderose/api_recepcao)
-- [deploy_recepcao](https://github.com/luscianaderose/deploy_recepcao)
+- [api_calendario](https://github.com/luscianaderose/api_calendario)
+- [front_recepcao](https://github.com/luscianaderose/front_recepcao)
 - [figma](https://www.figma.com/proto/4WaxuFjrOhR8aIHIlHXuIP/prj-recepcao-cefp-01?node-id=0-1&t=XGYyK7bsqyAa5qK2-1)
